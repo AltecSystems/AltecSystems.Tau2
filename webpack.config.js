@@ -194,7 +194,7 @@ module.exports = (env, argv) => {
         config.devServer = {
             contentBase: "./build",
             hot: true,
-            port: 1337,
+            port: 42069,
             historyApiFallback: true,
             https: false,
         };
