@@ -30,7 +30,7 @@ export class Home extends Component<HomeProps, HomeState> {
     const tau2 = this._calculateTau2(this.state.A, this.state.B, this.state.d, this.state.Ro, this.state.sInputs);
 
     return (
-      <Box sx={{ flexGrow: 1, verticalAlign: "center", p: 4 }} maxWidth={"md"}>
+      <Box sx={{ flexGrow: 1, verticalAlign: "center", p: 4 }} maxWidth="md">
         <Stack spacing={0}>
           <CardContent sx={{ width: "100%" }}>
             <Typography variant="h3" color="text.secondary" sx={{ mb: 1 }}>

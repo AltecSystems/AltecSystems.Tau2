@@ -1,6 +1,6 @@
 {
     "name": "altecsystems.tau2",
-    "homepage": "https://altecsystems.github.io/AltecSystems/Tau2Calculator/",
+    "homepage": "https://altecsystems.github.io/AltecSystems/Tau2Calculator",
     "version": "0.1.0",
     "private": true,
     "scripts": {
