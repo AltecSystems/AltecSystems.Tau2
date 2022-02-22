@@ -27,6 +27,8 @@ export class Home extends Component<HomeProps, HomeState> {
   }
 
   render(): JSX.Element {
+    const tau2 = this._calculateTau2(this.state.A, this.state.B, this.state.d, this.state.Ro, this.state.sInputs);
+
     return (
       <Box sx={{ flexGrow: 1, verticalAlign: "center", p: 4 }}>
         <Grid container spacing={2} maxWidth="lg">
@@ -151,7 +153,7 @@ export class Home extends Component<HomeProps, HomeState> {
                           sx={{ width: "100%" }}
                           label={
                             <>
-                              a<sub>${indexIncremented}</sub>
+                              a<sub>${indexIncremented}</sub>, м
                             </>
                           }
                           id={`a${indexIncremented}`}
@@ -172,7 +174,7 @@ export class Home extends Component<HomeProps, HomeState> {
                           sx={{ width: "100%" }}
                           label={
                             <>
-                              b<sub>${indexIncremented}</sub>
+                              b<sub>${indexIncremented}</sub>, м
                             </>
                           }
                           id={`b${indexIncremented}`}
@@ -198,7 +200,7 @@ export class Home extends Component<HomeProps, HomeState> {
                           <strong>
                             σ<sub>{indexIncremented}</sub>
                           </strong>{" "}
-                          = {(Math.round(2 * this.state.d * (s.a + s.b) * 10000) / 10000).toFixed(3)}
+                          ={this._calculateSigma(this.state.d, s)}м
                         </Typography>
                       </Grid>
                       <Grid item xs={4}>
@@ -211,7 +213,7 @@ export class Home extends Component<HomeProps, HomeState> {
                           <strong>
                             S<sub>{indexIncremented}</sub>
                           </strong>{" "}
-                          = {(Math.round(s.a * s.b * 10000) / 10000).toFixed(3)}
+                          ={this._calculateSquare(s)}м<sup>2</sup>
                         </Typography>
                       </Grid>
                     </Grid>
@@ -225,9 +227,71 @@ export class Home extends Component<HomeProps, HomeState> {
             <Typography variant="h3" color="text.secondary" gutterBottom sx={{ mb: 5 }}>
               Расчет
             </Typography>
+
+            <Typography
+              variant="h5"
+              color="text.secondary"
+              gutterBottom
+              sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}
+            >
+              <strong>
+                S<sub>0</sub>
+              </strong>{" "}
+              - площадь светового проема в снегу = <strong>A * B</strong> ={" "}
+              {this._calculateSquare({ a: this.state.A, b: this.state.B })}м<sup>2</sup>
+            </Typography>
+            <br />
+            <Typography
+              variant="h5"
+              color="text.secondary"
+              gutterBottom
+              sx={{ textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" }}
+            >
+              <strong>
+                τ<sub>2</sub>
+              </strong>{" "}
+              - коэффициент, учитывающий потери света в переплетах ={" "}
+              <strong>
+                {Number.isFinite(tau2) ? tau2 : <span style={{ color: "#E53935" }}>Не все коэффициенты указаны</span>}
+              </strong>
+            </Typography>
           </CardContent>
         </Grid>
       </Box>
     );
   }
+
+  private _calculateSigma = (d: number, s: { a: number; b: number }): string => {
+    return (Math.round(2 * d * (s.a + s.b) * 10000) / 10000).toFixed(3);
+  };
+
+  private _calculateSquare = (s: { a: number; b: number }): string => {
+    return (Math.round(s.a * s.b * 10000) / 10000).toFixed(3);
+  };
+
+  private _calculateTau2 = (
+    A: number,
+    B: number,
+    d: number,
+    Ro: number,
+    sInputs: { a: number; b: number }[]
+  ): number => {
+    const S0 = A * B;
+    let sInputsSum = 0;
+    for (let { a, b } of sInputs) {
+      const S = a * b;
+      const sgm = 2 * d * (a + b);
+
+      const sgmAndSSqrt = Math.sqrt(S * S + 0.25 * sgm * sgm);
+
+      const firstBraces = sgmAndSSqrt - 0.5 * sgm;
+      const numerator = Math.pow(S + 0.5 * sgm - sgmAndSSqrt, 2) * Ro; // числитель
+      const denominator = 0.5 * sgm * (1 - Ro) + 2 * (S + 0.5 * sgm - sgmAndSSqrt) * Ro; // знаменатель
+
+      const tmp = firstBraces + numerator / denominator;
+      sInputsSum += tmp;
+    }
+
+    return (1 / S0) * sInputsSum;
+  };
 }
