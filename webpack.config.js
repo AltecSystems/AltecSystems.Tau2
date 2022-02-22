@@ -31,7 +31,7 @@ let config = {
         filename: "[name].[contenthash:8].bundle.js", //todo: !!! webpack split bundle.js into chunks !!!
         path: path.resolve(__dirname, "build"),
         assetModuleFilename: "images/[name].[contenthash:8][ext]",
-        publicPath: "/",
+        publicPath: "/Tau2Calculator", //todo use from env
     },
 
     module: {

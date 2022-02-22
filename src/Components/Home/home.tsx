@@ -57,7 +57,7 @@ export class Home extends Component<HomeProps, HomeState> {
               <Grid item xs={12} md={6}>
                 <TextField
                   sx={{ width: "100%" }}
-                  label="Коэффициент B"
+                  label="Коэффициент B "
                   helperText="Габаритная высота оконного блока, м"
                   id="B"
                   type="number"
@@ -87,7 +87,7 @@ export class Home extends Component<HomeProps, HomeState> {
                 <TextField
                   sx={{ width: "100%" }}
                   label="Коэффициент d"
-                  helperText="Суммарная толщина переплета, м"
+                  helperText="Суммарная толщина переплета, м "
                   id="d"
                   type="number"
                   defaultValue="0"
