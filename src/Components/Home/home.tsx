@@ -87,7 +87,7 @@ export class Home extends Component<HomeProps, HomeState> {
                 <TextField
                   sx={{ width: "100%" }}
                   label="Коэффициент d"
-                  helperText="Суммарная толщина переплета, м "
+                  helperText="Суммарная толщина переплета, м"
                   id="d"
                   type="number"
                   defaultValue="0"
