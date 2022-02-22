@@ -25,8 +25,6 @@ export class App extends Component<AppProps, AppState> {
             </React.Suspense>
           )}
         />
-        {/*<Route path={SiteRoutes.Paper} component={PaperPage} />
-        <Route path={SiteRoutes.PaperContent} component={PaperContentPage} />*/}
         <Redirect to={"/"} />
       </Switch>
     );
