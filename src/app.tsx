@@ -16,16 +16,18 @@ export class App extends Component<AppProps, AppState> {
   render(): JSX.Element {
     return (
       <Switch>
+        {/** TODO move root path to env */}
         <Route
-          exact
-          path={"/"}
+          path={"/Tau2Calculator"}
           render={() => (
             <React.Suspense fallback={<></>}>
               <HomePage />
             </React.Suspense>
           )}
         />
-        <Redirect to={"/"} />
+
+        {/** TODO move root path to env */}
+        <Redirect to={"/Tau2Calculator"} />
       </Switch>
     );
   }
