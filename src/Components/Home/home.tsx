@@ -129,7 +129,7 @@ export class Home extends Component<HomeProps, HomeState> {
               <Button
                 variant="outlined"
                 onClick={() => {
-                  if (this.state.sInputs.length > 2) {
+                  if (this.state.sInputs.length > 1) {
                     let newState = this.state.sInputs.map((inp) => ({ a: inp.a, b: inp.b }));
                     newState.pop();
                     this.setState({ sInputs: newState });
